@@ -6,37 +6,32 @@ package model;
  * Beschrijft een cirkel
  */
 public class Cirkel {
-    public static final int DEFAULT_MIDDEL_PUNT_X = 0;
-    public static final int DEFAULT_MIDDEL_PUNT_Y = 0;
-    public static final String DEFAULT_KLEUR = "magenta";
-    public static final int DEFAULT_STRAAL = 1;
+    private static final double GRENSWAARDE_GROOT_FIGUUR = 100;
+    private static final double DEFAULT_MIDDEL_PUNT_X = 0;
+    private static final double DEFAULT_MIDDEL_PUNT_Y = 0;
+    private static final String DEFAULT_KLEUR = "magenta";
+    private static final double DEFAULT_STRAAL = 1;
 
-    public double straal;
-    public double middelPuntX;
-    public double middelPuntY;
-    public String kleur;
+    private double straal;
+    private double middelPuntX;
+    private double middelPuntY;
+    private String kleur;
 
     // all args (arguments)
     public Cirkel(double straal, double middelPuntX, double middelPuntY, String kleur) {
-        this.straal = straal;
+        setStraal(straal);
         this.middelPuntX = middelPuntX;
         this.middelPuntY = middelPuntY;
         this.kleur = kleur;
     }
 
     public Cirkel(double straal) {
-        this.straal = straal;
-        this.middelPuntX = DEFAULT_MIDDEL_PUNT_X;
-        this.middelPuntY = DEFAULT_MIDDEL_PUNT_Y;
-        this.kleur = DEFAULT_KLEUR;
+        this(straal, DEFAULT_MIDDEL_PUNT_X, DEFAULT_MIDDEL_PUNT_Y, DEFAULT_KLEUR);
     }
 
     // default constructor
     public Cirkel() {
-        this.straal = DEFAULT_STRAAL;
-        this.middelPuntX = DEFAULT_MIDDEL_PUNT_X;
-        this.middelPuntY = DEFAULT_MIDDEL_PUNT_Y;
-        this.kleur = DEFAULT_KLEUR;
+        this(DEFAULT_STRAAL);
     }
 
     public static String geefDefinitie() {
@@ -50,5 +45,27 @@ public class Cirkel {
 
     public double geefOppervlakte() {
         return Math.PI * straal * straal;
+    }
+
+    public String vertelOverGrootte() {
+        if (this.geefOppervlakte() > GRENSWAARDE_GROOT_FIGUUR) {
+            return "Ik ben groot!!!";
+        } else {
+            return "Ik ben klein!!!";
+        }
+    }
+
+    public double getStraal() {
+        return straal;
+    }
+
+    public void setStraal(double straal) {
+        if (straal > 0) {
+            this.straal = straal;
+        } else {
+            System.out.printf("De straal moet positief zijn. De straal wordt op %.1f gezet.\n",
+                    DEFAULT_STRAAL);
+            this.straal = DEFAULT_STRAAL;
+        }
     }
 }

@@ -64,4 +64,70 @@ class CirkelTest {
         assertEquals("Een cirkel is een verzameling punten, die allemaal dezelfde\n" +
                 "afstand tot een middelpunt hebben.", definitie);
     }
+
+    @Test
+    @DisplayName("Aanpassen straal naar negatief nummer mag niet werken")
+    void aanpassenStraalNaarNegatiefNummerMagNietWerken() {
+        // Arrange
+        Cirkel cirkel = new Cirkel();
+        double straal = -1;
+
+        // Act(ivate)
+        cirkel.setStraal(straal);
+
+        // Assert
+        assertNotEquals(straal, cirkel.getStraal());
+    }
+
+    @Test
+    @DisplayName("Straal aanpassen naar geldige nieuwe straal")
+    void straalAanpassenNaarGeldigeNieuweStraal() {
+        // Arrange
+        Cirkel cirkel = new Cirkel(5);
+        double straal = 8;
+
+        // Act(ivate)
+        cirkel.setStraal(straal);
+
+        // Assert
+        assertEquals(straal, cirkel.getStraal());
+    }
+
+    @Test
+    @DisplayName("Groot figuur")
+    void grootFiguur() {
+        // Arrange
+        Cirkel cirkel = new Cirkel(6);
+
+        // Act(ivate)
+        String grootte = cirkel.vertelOverGrootte();
+
+        // Assert
+        assertEquals("Ik ben groot!!!", grootte);
+    }
+
+    @Test
+    @DisplayName("Klein figuur")
+    void kleinFiguur() {
+        // Arrange
+        Cirkel cirkel = new Cirkel(5);
+
+        // Act(ivate)
+        String grootte = cirkel.vertelOverGrootte();
+
+        // Assert
+        assertEquals("Ik ben klein!!!", grootte);
+    }
+
+    @Test
+    @DisplayName("constructor aanroepen met negatieve straal")
+    void constructorAanroepenMetNegatieveStraal() {
+        // Arrange
+        Cirkel cirkel = new Cirkel(-1);
+
+        // Act(ivate)
+
+        // Assert
+        assertNotEquals(-1, cirkel.getStraal());
+    }
 }
