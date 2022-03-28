@@ -7,26 +7,23 @@ package model;
  */
 public class Cirkel {
     private static final double GRENSWAARDE_GROOT_FIGUUR = 100;
-    private static final double DEFAULT_MIDDEL_PUNT_X = 0;
-    private static final double DEFAULT_MIDDEL_PUNT_Y = 0;
     private static final String DEFAULT_KLEUR = "magenta";
     private static final double DEFAULT_STRAAL = 1;
+    private static final Punt DEFAULT_PUNT = new Punt();
 
     private double straal;
-    private double middelPuntX;
-    private double middelPuntY;
+    private Punt middelpunt;
     private String kleur;
 
     // all args (arguments)
-    public Cirkel(double straal, double middelPuntX, double middelPuntY, String kleur) {
+    public Cirkel(double straal, Punt middelpunt, String kleur) {
         setStraal(straal);
-        this.middelPuntX = middelPuntX;
-        this.middelPuntY = middelPuntY;
+        this.middelpunt = middelpunt;
         this.kleur = kleur;
     }
 
     public Cirkel(double straal) {
-        this(straal, DEFAULT_MIDDEL_PUNT_X, DEFAULT_MIDDEL_PUNT_Y, DEFAULT_KLEUR);
+        this(straal, new Punt(), DEFAULT_KLEUR);
     }
 
     // default constructor
@@ -67,5 +64,9 @@ public class Cirkel {
                     DEFAULT_STRAAL);
             this.straal = DEFAULT_STRAAL;
         }
+    }
+
+    public Punt getMiddelpunt() {
+        return middelpunt;
     }
 }

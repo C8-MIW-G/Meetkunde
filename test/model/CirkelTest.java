@@ -35,7 +35,7 @@ class CirkelTest {
     @DisplayName("Geef omtrek all-args constructor")
     void geefOmtrekAllArgsConstructor() {
         // Arrange
-        Cirkel cirkel = new Cirkel(2.5, 1, 4, "paars");
+        Cirkel cirkel = new Cirkel(2.5, new Punt(1, 4), "paars");
 
         // Act(ivate)
         double omtrek = cirkel.geefOmtrek();
