@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -19,7 +20,7 @@ public class Oppervlak {
     }
 
     public void voegFiguurToe(Figuur figuur) {
-        if (figuurPastAlsVormInOppervlak(figuur)) {
+        if (figuur.pastInOppervlak(lengte, breedte)) {
             mijnFiguren.add(figuur);
             System.out.println("Dit figuur is toegevoegd");
         } else {
@@ -39,31 +40,17 @@ public class Oppervlak {
         return gevraagdeFiguren;
     }
 
-    private boolean figuurPastAlsVormInOppervlak(Figuur figuur) {
-        boolean eenReturn = false;
-
-        if (figuur instanceof Rechthoek) {
-            if (((Rechthoek) figuur).getLengte() <= lengte && ((Rechthoek) figuur).getBreedte() <= breedte) {
-                eenReturn = true;
-            }
-        } else if (figuur instanceof Cirkel) {
-            if (((Cirkel) figuur).getStraal() <= breedte / 2) {
-                eenReturn = true;
-            }
-        }
-
-        return eenReturn;
-    }
-
     @Override
     public String toString() {
-        String eenReturn = "";
+        StringBuilder eenReturn = new StringBuilder();
+
+        Collections.sort(mijnFiguren);
 
         for (Figuur figuur : mijnFiguren) {
-            eenReturn += figuur.toString() + "\n\n";
+            eenReturn.append(String.format("%s\n\n", figuur.toString()));
         }
 
-        return eenReturn;
+        return eenReturn.toString();
     }
 
     public ArrayList<Figuur> getMijnFiguren() {

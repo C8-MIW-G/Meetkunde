@@ -5,7 +5,7 @@ package model;
  * <p>
  * Beschijft een punt in de 2d ruimte
  */
-public class Punt {
+public class Punt implements ToelaatbaarInOppervlak {
     private static final double DEFAULT_X = 0;
     private static final double DEFAULT_Y = 0;
 
@@ -32,5 +32,10 @@ public class Punt {
     @Override
     public String toString() {
         return String.format("(%.1f, %.1f)", xCoordinaat, yCoordinaat);
+    }
+
+    @Override
+    public boolean pastInOppervlak(double lengte, double breedte) {
+        return true;
     }
 }

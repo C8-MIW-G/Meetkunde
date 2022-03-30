@@ -52,6 +52,11 @@ public class Cirkel extends Figuur {
         return String.format("%s\nStraal: %f\nMiddelpunt: %s", super.toString(), this.straal, this.middelpunt);
     }
 
+    @Override
+    public boolean pastInOppervlak(double lengte, double breedte) {
+        return straal <= breedte / 2;
+    }
+
     public double getStraal() {
         return straal;
     }

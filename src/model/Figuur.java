@@ -5,7 +5,7 @@ package model;
  * <p>
  * Beschrijft de algemene eigenschappen van een figuur
  */
-public abstract class Figuur {
+public abstract class Figuur implements Comparable<Figuur>, ToelaatbaarInOppervlak {
     protected static final double GRENSWAARDE_GROOT_FIGUUR = 100;
     protected static final String DEFAULT_KLEUR = "papaya whip";
 
@@ -32,6 +32,17 @@ public abstract class Figuur {
             return "Ik ben groot!!!";
         } else {
             return "Ik ben klein!!!";
+        }
+    }
+
+    @Override
+    public int compareTo(Figuur anderFiguur) {
+        if (this.geefOppervlakte() > anderFiguur.geefOppervlakte()) {
+            return 1;
+        } else if (this.geefOppervlakte() < anderFiguur.geefOppervlakte()) {
+            return -1;
+        } else {
+            return 0;
         }
     }
 
