@@ -50,4 +50,12 @@ public class Rechthoek extends Figuur {
     public Punt getHoekpuntLinksBoven() {
         return hoekpuntLinksBoven;
     }
+
+    public double getLengte() {
+        return lengte;
+    }
+
+    public double getBreedte() {
+        return breedte;
+    }
 }
