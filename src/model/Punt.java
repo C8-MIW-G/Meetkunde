@@ -28,4 +28,9 @@ public class Punt {
     public double getyCoordinaat() {
         return yCoordinaat;
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%.1f, %.1f)", xCoordinaat, yCoordinaat);
+    }
 }

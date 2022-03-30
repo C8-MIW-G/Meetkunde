@@ -5,24 +5,25 @@ package model;
  * <p>
  * Beschrijft een cirkel
  */
-public class Cirkel {
-    private static final double GRENSWAARDE_GROOT_FIGUUR = 100;
-    private static final String DEFAULT_KLEUR = "magenta";
+public class Cirkel extends Figuur {
     private static final double DEFAULT_STRAAL = 1;
-    private static final Punt DEFAULT_PUNT = new Punt();
 
     private double straal;
     private Punt middelpunt;
-    private String kleur;
 
     // all args (arguments)
     public Cirkel(double straal, Punt middelpunt, String kleur) {
+        super(kleur);
         setStraal(straal);
         this.middelpunt = middelpunt;
-        this.kleur = kleur;
     }
 
     public Cirkel(double straal) {
+        // alternatief ter illustratie
+//        super();
+//        setStraal(straal);
+//        this.middelpunt = new Punt();
+
         this(straal, new Punt(), DEFAULT_KLEUR);
     }
 
@@ -36,20 +37,19 @@ public class Cirkel {
                 "afstand tot een middelpunt hebben.";
     }
 
+    @Override
     public double geefOmtrek() {
         return 2 * Math.PI * straal;
     }
 
+    @Override
     public double geefOppervlakte() {
         return Math.PI * straal * straal;
     }
 
-    public String vertelOverGrootte() {
-        if (this.geefOppervlakte() > GRENSWAARDE_GROOT_FIGUUR) {
-            return "Ik ben groot!!!";
-        } else {
-            return "Ik ben klein!!!";
-        }
+    @Override
+    public String toString() {
+        return String.format("%s\nStraal: %f\nMiddelpunt: %s", super.toString(), this.straal, this.middelpunt);
     }
 
     public double getStraal() {
