@@ -4,6 +4,8 @@ import model.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -17,22 +19,12 @@ import java.util.Scanner;
 public class MeetkundeLauncher {
 
     public static void main(String[] args) {
-        ArrayList<String> regelsUitBestand = new ArrayList<>();
+        ArrayList<Rechthoek> rechthoeken = new ArrayList<>();
         File rechthoekenBestand = new File("resources/Rechthoek.csv");
         try {
             Scanner invoerBestand = new Scanner(rechthoekenBestand);
             while (invoerBestand.hasNextLine()) {
-                regelsUitBestand.add(invoerBestand.nextLine());
-            }
-            invoerBestand.close();
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("Het bestand is niet gevonden");
-        }
-
-        if (regelsUitBestand.size() > 0) {
-            ArrayList<Rechthoek> rechthoeken = new ArrayList<>();
-            for (String regel : regelsUitBestand) {
-                String[] regelArray = regel.split(",");
+                String[] regelArray = invoerBestand.nextLine().split(",");
 
                 double lengte = Double.parseDouble(regelArray[0]);
                 double breedte = Double.parseDouble(regelArray[1]);
@@ -42,11 +34,21 @@ public class MeetkundeLauncher {
 
                 rechthoeken.add(new Rechthoek(lengte, breedte, new Punt(xCoordinaat, yCoordinaat), kleur));
             }
+            invoerBestand.close();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Het bestand is niet gevonden");
+        }
 
+        File uitvoerBestand = new File("resources/Rechthoeken.txt");
+        try {
+            PrintWriter printWriter = new PrintWriter(uitvoerBestand);
             for (Rechthoek rechthoek : rechthoeken) {
-                System.out.println(rechthoek);
-                System.out.println();
+                printWriter.println(rechthoek);
+                printWriter.println();
             }
+            printWriter.close();
+        } catch (IOException ioException) {
+            System.out.println("Het bestand kon niet gemaakt worden.");
         }
     }
 
