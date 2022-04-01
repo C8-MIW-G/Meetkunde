@@ -63,4 +63,18 @@ public class Rechthoek extends Figuur {
     public double getBreedte() {
         return breedte;
     }
+
+    public void setLengte(double lengte) {
+        if (lengte <= 0) {
+            throw new IllegalArgumentException("De lengte moet positief zijn.");
+        }
+        this.lengte = lengte;
+    }
+
+    public void setBreedte(double breedte) {
+        if (breedte <= 0) {
+            throw new IllegalArgumentException("De breedte moet positief zijn.");
+        }
+        this.breedte = breedte;
+    }
 }
