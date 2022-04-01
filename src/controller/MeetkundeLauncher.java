@@ -2,7 +2,10 @@ package controller;
 
 import model.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,24 +17,37 @@ import java.util.Scanner;
 public class MeetkundeLauncher {
 
     public static void main(String[] args) {
-       Scanner keyboard = new Scanner(System.in);
-       boolean onjuistInvoer = true;
-       while (onjuistInvoer) {
-           System.out.print("Geef een straal: ");
-           try {
-               double straal = keyboard.nextDouble();
-               Cirkel ingevoerdeCirkel = new Cirkel(straal);
-               System.out.println(ingevoerdeCirkel);
-               onjuistInvoer = false;
-           } catch (InputMismatchException fouteInvoer) {
-               System.out.println("Je moet een kommagetal invoeren!");
-               keyboard.nextLine();
-           } catch (IllegalArgumentException fouteWaarde) {
-               System.err.println(fouteWaarde.getMessage());
-           } finally {
-               System.out.println("Je goede of foute invoer is nu afgehandeld");
-           }
-       }
+        ArrayList<String> regelsUitBestand = new ArrayList<>();
+        File rechthoekenBestand = new File("resources/Rechthoek.csv");
+        try {
+            Scanner invoerBestand = new Scanner(rechthoekenBestand);
+            while (invoerBestand.hasNextLine()) {
+                regelsUitBestand.add(invoerBestand.nextLine());
+            }
+            invoerBestand.close();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Het bestand is niet gevonden");
+        }
+
+        if (regelsUitBestand.size() > 0) {
+            ArrayList<Rechthoek> rechthoeken = new ArrayList<>();
+            for (String regel : regelsUitBestand) {
+                String[] regelArray = regel.split(",");
+
+                double lengte = Double.parseDouble(regelArray[0]);
+                double breedte = Double.parseDouble(regelArray[1]);
+                double xCoordinaat = Double.parseDouble(regelArray[2]);
+                double yCoordinaat = Double.parseDouble(regelArray[3]);
+                String kleur = regelArray[4];
+
+                rechthoeken.add(new Rechthoek(lengte, breedte, new Punt(xCoordinaat, yCoordinaat), kleur));
+            }
+
+            for (Rechthoek rechthoek : rechthoeken) {
+                System.out.println(rechthoek);
+                System.out.println();
+            }
+        }
     }
 
     public static void toonInformatie(Figuur figuur) {
