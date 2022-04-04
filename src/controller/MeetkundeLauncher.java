@@ -1,5 +1,6 @@
 package controller;
 
+import database.DBaccess;
 import model.*;
 
 import java.io.File;
@@ -18,53 +19,30 @@ import java.util.Scanner;
  * Spelen met de meetkunde code
  */
 public class MeetkundeLauncher {
-    private static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String PREFIX_CONNECTION_URL =
-            "jdbc:mysql://localhost:3306/";
-    private static final String CONNECTION_SETTINGS = "?useSSL=false" +
-            "&allowPublicKeyRetrieval=true" +
-            "&useJDBCCompliantTimezoneShift=true" +
-            "&useLegacyDatetimeCode=false" +
-            "&serverTimezone=UTC";
 
     public static void main(String[] args) {
-        String databaseName = "Figuren";
-        String mainUser = "userFiguren";
-        String mainUserPassword = "userFigurenPW";
+        DBaccess dBaccess = new DBaccess("figuren",
+                "userFiguren", "userFigurenPW");
+        dBaccess.openConnection();
 
-        String connectionURL = PREFIX_CONNECTION_URL + databaseName + CONNECTION_SETTINGS;
-        Connection connection = null;
+        Connection connection = dBaccess.getConnection();
+        String sql = "SELECT * FROM punt;";
+
         try {
-            Class.forName(MYSQL_DRIVER);
-            connection = DriverManager.getConnection(connectionURL, mainUser, mainUserPassword);
-        } catch (ClassNotFoundException driverFout) {
-            System.out.println("Driver niet gevonden");
-        } catch (SQLException sqlFout) {
-            System.out.println("SQL Exception: " + sqlFout.getMessage());
-        }
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (connection != null) {
-            System.out.println("de verbinding is gemaakt!");
-
-            String sql = "SELECT * FROM punt;";
-
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                while (resultSet.next()) {
-                    double xCoordinaat = resultSet.getDouble("xcoordinaat");
-                    double yCoordinaat = resultSet.getDouble("ycoordinaat");
-                    Punt punt = new Punt(xCoordinaat, yCoordinaat);
-                    System.out.println(punt);
-                }
-
-                connection.close();
-            } catch (SQLException sqlException) {
-                System.out.println(sqlException);
+            while (resultSet.next()) {
+                double xCoordinaat = resultSet.getDouble("xcoordinaat");
+                double yCoordinaat = resultSet.getDouble("ycoordinaat");
+                Punt punt = new Punt(xCoordinaat, yCoordinaat);
+                System.out.println(punt);
             }
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException);
         }
 
+        dBaccess.closeConnection();
     }
 
     public static void toonInformatie(Figuur figuur) {
