@@ -1,17 +1,11 @@
 package controller;
 
 import database.DBaccess;
-import model.*;
+import database.PuntDAO;
+import model.Figuur;
+import model.Punt;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * @author Vincent Velthuizen <v.r.velthuizen@pl.hanze.nl>
@@ -25,21 +19,12 @@ public class MeetkundeLauncher {
                 "userFiguren", "userFigurenPW");
         dBaccess.openConnection();
 
-        Connection connection = dBaccess.getConnection();
-        String sql = "SELECT * FROM punt;";
+        PuntDAO puntDAO = new PuntDAO(dBaccess);
+        puntDAO.slaPuntOp(new Punt(-4, -2));
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                double xCoordinaat = resultSet.getDouble("xcoordinaat");
-                double yCoordinaat = resultSet.getDouble("ycoordinaat");
-                Punt punt = new Punt(xCoordinaat, yCoordinaat);
-                System.out.println(punt);
-            }
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException);
+        ArrayList<Punt> punten = puntDAO.getPunten();
+        for (Punt punt : punten) {
+            System.out.println(punt);
         }
 
         dBaccess.closeConnection();
